@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TV on Table</title>
   <style>
-     body {
+    body {
       margin: 0;
       padding: 0;
       display: flex;
@@ -15,6 +15,7 @@
       height: 100vh;
       font-family: Arial, sans-serif;
     }
+
     .table {
       position: relative;
       top: 180px;
@@ -80,15 +81,14 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       background-color: rgba(255, 255, 255, 0.8);
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
-    
     }
 
     .logo img {
@@ -97,19 +97,47 @@
       object-fit: contain;
     }
 
+    .controls {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .button {
+      background: #333;
+      border: none;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .slider {
+      width: 200px;
+    }
+
+    .volume {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
     .animated-text {
-      position:absolute;
+      position: absolute;
       font-style: italic;
-      font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
       top: -65px;
       width: 95%;
       text-align: center;
       color: rgb(224, 212, 212);
       font-size: 0.9rem;
       left: 20px;
-      
     }
-
   </style>
 </head>
 <body>
@@ -119,13 +147,63 @@
         <div class="logo">
           <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitEnXjv6YhEAEv-pmCYyS12P4axb3-yLzp6-d-SYQN72owZSEWZEaeWmRFRG2-SJ_DmWMgGQ8ziXApCj7Yg4TjNkiBCrNebIpGERKTwEuSMRJM_fjmmzblqKB7K8OtmXAHNU1LgiOWGVpC0ja92hXlvIwpy_2H_hkft978g06bnVBZ20pJd-nKcGLNY9E1/w304-h320/logo-tag-m4-mlbb.png" alt="Logo"> 
         </div>
-        <video autoplay loop controls>
+        <video id="video" autoplay loop>
           <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
         </video>
       </div>
       <div class="tv-stand"></div>
     </div>
-    <div class="animated-text"><marquee behavior="scroll" direction="left">hey rahul its you again but you is no good k so i send this to you again Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur soluta veritatis at error iste quia placeat consectetur nostrum dolores! Quibusdam doloremque error tenetur itaque saepe adipisci magni inventore voluptatibus facilis.</marquee> </div>
+
+    
+    <div class="controls">
+      <button class="button" id="playPause">Play/Pause</button>
+      <input type="range" id="progress" class="slider" min="0" max="100" value="0">
+      <div class="volume">
+        <label for="volume">Volume</label>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+      </div>
+      <button class="button" id="fullscreen">Fullscreen</button>
+    </div>
   </div>
+
+  <div class="animated-text">
+    <marquee behavior="scroll" direction="left">
+      Hey Rahul! It's you again, but you are no good, okay? So, I send this to you again. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur soluta veritatis at error iste quia placeat consectetur nostrum dolores! Quibusdam doloremque error tenetur itaque saepe adipisci magni inventore voluptatibus facilis.
+    </marquee>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+    const playPauseButton = document.getElementById('playPause');
+    const fullscreenButton = document.getElementById('fullscreen');
+    const progress = document.getElementById('progress');
+    const volume = document.getElementById('volume');
+
+    playPauseButton.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+        playPauseButton.textContent = 'Pause';
+      } else {
+        video.pause();
+        playPauseButton.textContent = 'Play';
+      }
+    });
+
+    fullscreenButton.addEventListener('click', () => {
+      video.requestFullscreen();
+    });
+
+    video.addEventListener('timeupdate', () => {
+      progress.value = (video.currentTime / video.duration) * 100;
+    });
+
+    progress.addEventListener('input', (e) => {
+      video.currentTime = (e.target.value / 100) * video.duration;
+    });
+
+    volume.addEventListener('input', (e) => {
+      video.volume = e.target.value;
+    });
+  </script>
 </body>
 </html>
