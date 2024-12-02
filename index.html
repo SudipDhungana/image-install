@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TV on Table</title>
+  <title>TV on Table with Ads</title>
   <style>
     body {
       margin: 0;
@@ -14,27 +14,27 @@
       background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(147,66,222,1) 38%);
       height: 100vh;
       font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .table {
       position: relative;
       top: 180px;
       width: 50vw;
-      height: 10vh;
+      height: 15vh;
       background: #d16a15;
       border-radius: 5px;
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-    }
-
-    .table::before { 
-      content: '';
-      position: absolute;
-      top: -15px;
-      left: 0;
-      width: 100%;
-      height: 15px;
-      background: #041c0b;
-      border-radius: 10px 10px 0 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .tv {
@@ -59,10 +59,10 @@
       background-color: #000;
     }
 
-    video {
+    iframe {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      border: none;
     }
 
     .tv-stand {
@@ -77,18 +77,38 @@
       box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
     }
 
+    .controls {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .control-btn {
+      font-size: 2rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .time-display {
+      font-size: 1.5rem;
+      color: white;
+      user-select: none;
+    }
+
     .logo {
       position: absolute;
       top: 10px;
       right: 10px;
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       background-color: rgba(255, 255, 255, 0.8);
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      z-index: 2;
     }
 
     .logo img {
@@ -97,113 +117,110 @@
       object-fit: contain;
     }
 
-    .controls {
+    .url-input {
       position: absolute;
-      bottom: 15px;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .button {
-      background: #333;
-      border: none;
-      color: white;
       padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
       font-size: 1rem;
-    }
-
-    .slider {
-      width: 200px;
-    }
-
-    .volume {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .animated-text {
-      position: absolute;
-      font-style: italic;
-      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-      top: -65px;
-      width: 95%;
-      text-align: center;
-      color: rgb(224, 212, 212);
-      font-size: 0.9rem;
-      left: 20px;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ccc;
+      width: 50%;
     }
   </style>
 </head>
 <body>
-  <div class="table">
-    <div class="tv">
-      <div class="tv-screen">
-        <div class="logo">
-          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitEnXjv6YhEAEv-pmCYyS12P4axb3-yLzp6-d-SYQN72owZSEWZEaeWmRFRG2-SJ_DmWMgGQ8ziXApCj7Yg4TjNkiBCrNebIpGERKTwEuSMRJM_fjmmzblqKB7K8OtmXAHNU1LgiOWGVpC0ja92hXlvIwpy_2H_hkft978g06bnVBZ20pJd-nKcGLNY9E1/w304-h320/logo-tag-m4-mlbb.png" alt="Logo"> 
+
+  <div class="container">
+    <div class="table">
+      <div class="controls">
+        <span class="control-btn" id="play-pause">⏯️</span>
+        <span class="time-display" id="time-display">0:00</span>
+        <span class="control-btn" id="fullscreen">⛶</span>
+      </div>
+      <div class="tv">
+        <div class="tv-screen">
+          <iframe id="video" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1" allowfullscreen></iframe>
         </div>
-        <video id="video" autoplay loop>
-          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-        </video>
+        <div class="tv-stand"></div>
       </div>
-      <div class="tv-stand"></div>
-    </div>
-
-    
-    <div class="controls">
-      <button class="button" id="playPause">Play/Pause</button>
-      <input type="range" id="progress" class="slider" min="0" max="100" value="0">
-      <div class="volume">
-        <label for="volume">Volume</label>
-        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
-      </div>
-      <button class="button" id="fullscreen">Fullscreen</button>
     </div>
   </div>
 
-  <div class="animated-text">
-    <marquee behavior="scroll" direction="left">
-      Hey Rahul! It's you again, but you are no good, okay? So, I send this to you again. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur soluta veritatis at error iste quia placeat consectetur nostrum dolores! Quibusdam doloremque error tenetur itaque saepe adipisci magni inventore voluptatibus facilis.
-    </marquee>
-  </div>
+  <input class="url-input" type="text" id="videoURL" placeholder="Enter YouTube URL and press Enter">
 
   <script>
     const video = document.getElementById('video');
-    const playPauseButton = document.getElementById('playPause');
-    const fullscreenButton = document.getElementById('fullscreen');
-    const progress = document.getElementById('progress');
-    const volume = document.getElementById('volume');
+    const playPauseBtn = document.getElementById('play-pause');
+    const fullscreenBtn = document.getElementById('fullscreen');
+    const timeDisplay = document.getElementById('time-display');
+    let isPlaying = false;
 
-    playPauseButton.addEventListener('click', () => {
-      if (video.paused) {
-        video.play();
-        playPauseButton.textContent = 'Pause';
+    // YouTube Player API setup
+    let player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('video', {
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        isPlaying = true;
+      } else if (event.data == YT.PlayerState.PAUSED) {
+        isPlaying = false;
+      }
+    }
+
+    playPauseBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        player.pauseVideo();
       } else {
-        video.pause();
-        playPauseButton.textContent = 'Play';
+        player.playVideo();
+      }
+      isPlaying = !isPlaying;
+    });
+
+    fullscreenBtn.addEventListener('click', () => {
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
       }
     });
 
-    fullscreenButton.addEventListener('click', () => {
-      video.requestFullscreen();
+    const videoURLInput = document.getElementById('videoURL');
+    videoURLInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const url = videoURLInput.value.trim();
+        const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=))([\w-]{11})/);
+        if (videoIdMatch && videoIdMatch[1]) {
+          player.loadVideoById(videoIdMatch[1]);
+          isPlaying = true;
+        } else {
+          alert('Invalid YouTube link');
+        }
+      }
     });
 
-    video.addEventListener('timeupdate', () => {
-      progress.value = (video.currentTime / video.duration) * 100;
-    });
+    // Update time display
+    setInterval(() => {
+      if (player && isPlaying) {
+        const currentTime = player.getCurrentTime();
+        const minutes = Math.floor(currentTime / 60);
+        const seconds = Math.floor(currentTime % 60);
+        timeDisplay.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+      }
+    }, 1000);
 
-    progress.addEventListener('input', (e) => {
-      video.currentTime = (e.target.value / 100) * video.duration;
-    });
-
-    volume.addEventListener('input', (e) => {
-      video.volume = e.target.value;
-    });
+    // Load YouTube IFrame API
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
   </script>
+
 </body>
 </html>
+
