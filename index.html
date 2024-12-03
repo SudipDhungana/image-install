@@ -30,11 +30,12 @@
       width: 50vw;
       height: 15vh;
       background: #d16a15;
-      border-radius: 5px;
+      border-radius:  5px;
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
       display: flex;
       justify-content: center;
       align-items: center;
+      border: 7px solid black;
     }
 
     .tv {
@@ -59,6 +60,44 @@
       background-color: #000;
     }
 
+    .ad {
+  width: 10vw;
+  height: 359px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  border: 5px solid blue;
+  
+}
+
+.ad img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.left-ad {
+  margin-left: 20px;
+  margin-bottom: 170px;
+  width: 40%;
+}
+
+.right-ad {
+  margin-right: 20px;
+  margin-bottom: 170px;
+  width: 40%;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+}
+
+
     iframe {
       width: 100%;
       height: 100%;
@@ -67,7 +106,7 @@
 
     .tv-stand {
       position: absolute;
-      bottom: -30px;
+      bottom: -40px;
       left: 50%;
       transform: translateX(-50%);
       width: 100px;
@@ -82,6 +121,7 @@
       gap: 20px;
       justify-content: center;
       align-items: center;
+      position: absolute;
     }
 
     .control-btn {
@@ -90,10 +130,31 @@
       user-select: none;
     }
 
-    .time-display {
-      font-size: 1.5rem;
+    .time-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .time-text {
+      font-size: 1.2rem;
       color: white;
-      user-select: none;
+    }
+
+    .progress-bar-container {
+      position: relative;
+      width: 200px;
+      height: 10px;
+      background: #ddd;
+      border-radius: 5px;
+    }
+
+    .progress-bar {
+      position: absolute;
+      height: 100%;
+      background: red;
+      width: 0;
+      border-radius: 5px;
     }
 
     .logo {
@@ -132,12 +193,24 @@
   </style>
 </head>
 <body>
+  <div class="ad left-ad">
+    <img src="coke.jpg" alt="Left Ad">
+  </div>
 
   <div class="container">
+    
+    
+   
+    
     <div class="table">
       <div class="controls">
         <span class="control-btn" id="play-pause">⏯️</span>
-        <span class="time-display" id="time-display">0:00</span>
+        <div class="time-container">
+          <span id="current-time" class="time-text">0:00</span>
+          <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+        </div>
         <span class="control-btn" id="fullscreen">⛶</span>
       </div>
       <div class="tv">
@@ -148,6 +221,11 @@
       </div>
     </div>
   </div>
+  <div class="ad right-ad">
+    <img src="coke.jpg" alt="Right Ad">
+  </div>
+
+  
 
   <input class="url-input" type="text" id="videoURL" placeholder="Enter YouTube URL and press Enter">
 
@@ -155,23 +233,25 @@
     const video = document.getElementById('video');
     const playPauseBtn = document.getElementById('play-pause');
     const fullscreenBtn = document.getElementById('fullscreen');
-    const timeDisplay = document.getElementById('time-display');
+    const currentTimeText = document.getElementById('current-time');
+    const progressBar = document.getElementById('progress-bar');
+    const videoURLInput = document.getElementById('videoURL');
     let isPlaying = false;
 
-    // YouTube Player API setup
+    
     let player;
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('video', {
         events: {
-          'onStateChange': onPlayerStateChange
+          'onStateChange': onPlayerStateChange,
         }
       });
     }
 
     function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
+      if (event.data === YT.PlayerState.PLAYING) {
         isPlaying = true;
-      } else if (event.data == YT.PlayerState.PAUSED) {
+      } else if (event.data === YT.PlayerState.PAUSED) {
         isPlaying = false;
       }
     }
@@ -191,7 +271,24 @@
       }
     });
 
-    const videoURLInput = document.getElementById('videoURL');
+   
+    setInterval(() => {
+      if (player && isPlaying) {
+        const currentTime = player.getCurrentTime();
+        const duration = player.getDuration();
+        const percent = (currentTime / duration) * 100;
+        
+       
+        const minutes = Math.floor(currentTime / 60);
+        const seconds = Math.floor(currentTime % 60);
+        currentTimeText.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+
+       
+        progressBar.style.width = `${percent}%`;
+      }
+    }, 1000);
+
+   
     videoURLInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         const url = videoURLInput.value.trim();
@@ -205,17 +302,7 @@
       }
     });
 
-    // Update time display
-    setInterval(() => {
-      if (player && isPlaying) {
-        const currentTime = player.getCurrentTime();
-        const minutes = Math.floor(currentTime / 60);
-        const seconds = Math.floor(currentTime % 60);
-        timeDisplay.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-      }
-    }, 1000);
-
-    // Load YouTube IFrame API
+  
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     document.body.appendChild(tag);
@@ -223,4 +310,5 @@
 
 </body>
 </html>
+
 
