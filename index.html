@@ -1,314 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TV on Table with Ads</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(147,66,222,1) 38%);
-      height: 100vh;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Layout Clone</title>
+    
+    <style>
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #181818;
+    color: #d5e0e3;
+}
 
-    .container {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+a{
+    text-decoration: none;
+    color: inherit;
+   
+}
 
-    .table {
-      position: relative;
-      top: 180px;
-      width: 50vw;
-      height: 15vh;
-      background: #d16a15;
-      border-radius:  5px;
-      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 7px solid black;
-    }
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #202020;
+}
 
-    .tv {
-      position: absolute;
-      top: -57vh;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 48vw;
-      height: 50vh;
-      background: #000;
-      border: 10px solid #8b9494;
-      border-radius: 10px;
-      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.7);
-    }
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
 
-    .tv-screen {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      border-radius: 5px;
-      background-color: #000;
-    }
 
-    .ad {
-  width: 10vw;
-  height: 359px;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-  border: 5px solid blue;
+  .url-input {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    width: 50%;
+  }
+.search{
+    margin-left:750px ;
+    margin-top: 10px;
+}
+.icons span {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.categories {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    background-color: #202020;
+    gap: 10px;
+}
+
+.categories button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 16px;
+    background-color: #303030;
+    color: #fff;
+    cursor: pointer;
+}
+
+.categories .active {
+    background-color: #fff;
+    color: #000;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 60px;
   
+    padding: 20px;
+
+}
+.card {
+    background-color: #282828;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.ad img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+.card img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
-.left-ad {
-  margin-left: 20px;
-  margin-bottom: 170px;
-  width: 40%;
+.card h4, .card p {
+    padding: 10px;
+    margin: 0;
 }
 
-.right-ad {
-  margin-right: 20px;
-  margin-bottom: 170px;
-  width: 40%;
-}
-
-.container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: row;
-}
-
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .tv-stand {
-      position: absolute;
-      bottom: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 30px;
-      background: #08150c;
-      border-radius: 5px;
-      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .controls {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-    }
-
-    .control-btn {
-      font-size: 2rem;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .time-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .time-text {
-      font-size: 1.2rem;
-      color: white;
-    }
-
-    .progress-bar-container {
-      position: relative;
-      width: 200px;
-      height: 10px;
-      background: #ddd;
-      border-radius: 5px;
-    }
-
-    .progress-bar {
-      position: absolute;
-      height: 100%;
-      background: red;
-      width: 0;
-      border-radius: 5px;
-    }
-
-    .logo {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 50px;
-      height: 50px;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      z-index: 2;
-    }
-
-    .logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .url-input {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 5px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 1px solid #ccc;
-      width: 50%;
-    }
-  </style>
+    </style>
 </head>
 <body>
-  <div class="ad left-ad">
-    <img src="coke.jpg" alt="Left Ad">
-  </div>
+    <header class="navbar">
+        <div class="logo">YouTube</div>
+        <div class="search-bar">
+            <input class="url-input" type="text" id="videoURL" placeholder="Enter YouTube URL and press Enter">
+            <a class="search" href="./tv.html">🔍</a>
 
-  <div class="container">
-    
-    
-   
-    
-    <div class="table">
-      <div class="controls">
-        <span class="control-btn" id="play-pause">⏯️</span>
-        <div class="time-container">
-          <span id="current-time" class="time-text">0:00</span>
-          <div class="progress-bar-container">
-            <div id="progress-bar" class="progress-bar"></div>
-          </div>
         </div>
-        <span class="control-btn" id="fullscreen">⛶</span>
-      </div>
-      <div class="tv">
-        <div class="tv-screen">
-          <iframe id="video" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1" allowfullscreen></iframe>
+        <div class="icons">
+            <span>🔔</span>
+            <span>👤</span>
         </div>
-        <div class="tv-stand"></div>
-      </div>
-    </div>
-  </div>
-  <div class="ad right-ad">
-    <img src="coke.jpg" alt="Right Ad">
-  </div>
+    </header>
 
-  
+    <nav class="categories">
+        <button class="active">All</button>
+        <button>Music</button>
+        <button>Mixes</button>
+        <button>Live</button>
+        <button>Gaming</button>
+        <button>Flute</button>
+        <button>Meditation music</button>
+        <button>Playlists</button>
+        <button>Mantras</button>
+    </nav>
 
-  <input class="url-input" type="text" id="videoURL" placeholder="Enter YouTube URL and press Enter">
-
-  <script>
-    const video = document.getElementById('video');
-    const playPauseBtn = document.getElementById('play-pause');
-    const fullscreenBtn = document.getElementById('fullscreen');
-    const currentTimeText = document.getElementById('current-time');
-    const progressBar = document.getElementById('progress-bar');
-    const videoURLInput = document.getElementById('videoURL');
-    let isPlaying = false;
-
-    
-    let player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('video', {
-        events: {
-          'onStateChange': onPlayerStateChange,
-        }
-      });
-    }
-
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.PLAYING) {
-        isPlaying = true;
-      } else if (event.data === YT.PlayerState.PAUSED) {
-        isPlaying = false;
-      }
-    }
-
-    playPauseBtn.addEventListener('click', () => {
-      if (isPlaying) {
-        player.pauseVideo();
-      } else {
-        player.playVideo();
-      }
-      isPlaying = !isPlaying;
-    });
-
-    fullscreenBtn.addEventListener('click', () => {
-      if (video.requestFullscreen) {
-        video.requestFullscreen();
-      }
-    });
-
-   
-    setInterval(() => {
-      if (player && isPlaying) {
-        const currentTime = player.getCurrentTime();
-        const duration = player.getDuration();
-        const percent = (currentTime / duration) * 100;
+    <main class="grid">
+         <a href="./tv.html"><div class="card">
+            <img src="https://preview.redd.it/i-got-random-thumbnail-images-i-made-and-want-all-of-your-v0-m5bj4hgohtqa1.png?width=640&crop=smart&auto=webp&s=a21ac04800f627677ac678237084008630034f1d" alt="Video 1">
+            <h4>Mix – Dhani Bau ko Chhori</h4>
+            <p>Shashwot Khadka, Hrittal, Ashutosh KC</p>
+        </div></a>
+         <a href="./tv.html"><div class="card">
+            <img src="https://preview.redd.it/i-got-random-thumbnail-images-i-made-and-want-all-of-your-v0-m5bj4hgohtqa1.png?width=640&crop=smart&auto=webp&s=a21ac04800f627677ac678237084008630034f1d" alt="Video 1">
+            <h4>Mix – Dhani Bau ko Chhori</h4>
+            <p>Shashwot Khadka, Hrittal, Ashutosh KC</p>
+        </div></a>
+         <a href="./tv.html"><div class="card">
+            <img src="https://preview.redd.it/i-got-random-thumbnail-images-i-made-and-want-all-of-your-v0-m5bj4hgohtqa1.png?width=640&crop=smart&auto=webp&s=a21ac04800f627677ac678237084008630034f1d" alt="Video 1">
+            <h4>Mix – Dhani Bau ko Chhori</h4>
+            <p>Shashwot Khadka, Hrittal, Ashutosh KC</p>
+        </div></a>
+         <a href="./tv.html"><div class="card">
+            <img src="https://preview.redd.it/i-got-random-thumbnail-images-i-made-and-want-all-of-your-v0-m5bj4hgohtqa1.png?width=640&crop=smart&auto=webp&s=a21ac04800f627677ac678237084008630034f1d" alt="Video 1">
+            <h4>Mix – Dhani Bau ko Chhori</h4>
+            <p>Shashwot Khadka, Hrittal, Ashutosh KC</p>
+        </div></a>
+         <a href="./tv.html"><div class="card">
+            <img src="https://preview.redd.it/i-got-random-thumbnail-images-i-made-and-want-all-of-your-v0-m5bj4hgohtqa1.png?width=640&crop=smart&auto=webp&s=a21ac04800f627677ac678237084008630034f1d" alt="Video 1">
+            <h4>Mix – Dhani Bau ko Chhori</h4>
+            <p>Shashwot Khadka, Hrittal, Ashutosh KC</p>
+        </div></a>
+         <a href="./tv.html"><div class="card">
+            <img src="https://preview.redd.it/i-got-random-thumbnail-images-i-made-and-want-all-of-your-v0-m5bj4hgohtqa1.png?width=640&crop=smart&auto=webp&s=a21ac04800f627677ac678237084008630034f1d" alt="Video 1">
+            <h4>Mix – Dhani Bau ko Chhori</h4>
+            <p>Shashwot Khadka, Hrittal, Ashutosh KC</p>
+        </div></a>
+         <a href="./tv.html"><div class="card">
+            <img src="https://preview.redd.it/i-got-random-thumbnail-images-i-made-and-want-all-of-your-v0-m5bj4hgohtqa1.png?width=640&crop=smart&auto=webp&s=a21ac04800f627677ac678237084008630034f1d" alt="Video 1">
+            <h4>Mix – Dhani Bau ko Chhori</h4>
+            <p>Shashwot Khadka, Hrittal, Ashutosh KC</p>
+        </div></a>
+         <a href="./tv.html"><div class="card">
+            <img src="https://preview.redd.it/i-got-random-thumbnail-images-i-made-and-want-all-of-your-v0-m5bj4hgohtqa1.png?width=640&crop=smart&auto=webp&s=a21ac04800f627677ac678237084008630034f1d" alt="Video 1">
+            <h4>Mix – Dhani Bau ko Chhori</h4>
+            <p>Shashwot Khadka, Hrittal, Ashutosh KC</p>
+        </div></a>
         
        
-        const minutes = Math.floor(currentTime / 60);
-        const seconds = Math.floor(currentTime % 60);
-        currentTimeText.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-
-       
-        progressBar.style.width = `${percent}%`;
-      }
-    }, 1000);
-
-   
-    videoURLInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const url = videoURLInput.value.trim();
-        const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=))([\w-]{11})/);
-        if (videoIdMatch && videoIdMatch[1]) {
-          player.loadVideoById(videoIdMatch[1]);
-          isPlaying = true;
-        } else {
-          alert('Invalid YouTube link');
-        }
-      }
-    });
-
-  
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-  </script>
-
+    </main>
+    <script src="app.js"></script>
 </body>
 </html>
-
-

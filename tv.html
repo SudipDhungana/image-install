@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TV on Table with Ads</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+   
+  </style>
+</head>
+
+
+<body>
+
+ <input class="url-input" type="text" id="videoURL" placeholder="Enter YouTube URL and press Enter" 
+ style="background-color: black;">
+
+
+  <div class="ad left-ad">
+    <img src="coke.jpg" alt="Left Ad">
+  </div>
+
+  <div class="container">
+    <div class="table">
+      <div class="controls">
+        <span class="control-btn" id="play-pause">⏯️</span>
+        <div class="time-container">
+          <span id="current-time" class="time-text">0:00</span>
+          <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+        </div>
+        <span class="control-btn" id="fullscreen">⛶</span>
+      </div>
+      <div class="tv">
+        <div class="tv-screen">
+          <iframe id="video" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1" allowfullscreen></iframe>
+        </div>
+        <div class="tv-stand"></div>
+      </div>
+    </div>
+  </div>
+  <div class="ad right-ad">
+    <img src="coke.jpg" alt="Right Ad">
+  </div>
+
+  
+
+  
+  
+  
+
+  <script src="app.js">
+   
+  </script>
+
+</body>
+</html>
+
+
